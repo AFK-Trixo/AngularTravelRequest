@@ -1,0 +1,89 @@
+.create-request-container {
+    min-height: 100vh;
+    padding: 2rem;
+    background: radial-gradient(circle at center, #1a2138 0%, #2b2d3c 80%);
+    color: #fff;
+  
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+  
+    .create-request-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #2e2e3a;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.2rem;
+  
+        label {
+          font-weight: 600;
+          margin-bottom: 0.3rem;
+          color: #ddd;
+  
+          .required {
+            color: #dc3545;
+            font-weight: bold;
+          }
+        }
+  
+        input,
+        select,
+        textarea {
+          background: #3e3e4a;
+          color: #fff;
+          border: 1px solid #555;
+          border-radius: 4px;
+          padding: 0.5rem;
+          font-size: 0.95rem;
+        }
+  
+        textarea {
+          min-height: 60px;
+          resize: vertical;
+        }
+      }
+  
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 1.5rem;
+  
+        .btn-cancel,
+        .btn-submit {
+          padding: 0.6rem 1.2rem;
+          border: none;
+          border-radius: 6px;
+          font-weight: 600;
+          font-size: 0.95rem;
+          cursor: pointer;
+        }
+  
+        .btn-cancel {
+          background-color: #dc3545;
+          color: #fff;
+  
+          &:hover {
+            background-color: #b71c1c;
+          }
+        }
+  
+        .btn-submit {
+          background-color: #28a745;
+          color: #fff;
+  
+          &:hover {
+            background-color: #218838;
+          }
+        }
+      }
+    }
+  }
+  

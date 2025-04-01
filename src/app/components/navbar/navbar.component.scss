@@ -1,0 +1,87 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #3b1769, #711f8d);
+    height: 60px;
+    padding: 0 2rem;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-left {
+    .welcome-text {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+  
+  .navbar-center {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    margin-right: 7rem;          /* Shift center content to the left */
+    gap: 1rem;
+  }
+  
+  .create-request-btn,
+  .nav-button {
+    background-color: #fff;
+    color: #6c63ff;
+    border: 2px solid #6c63ff;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .create-request-btn:hover,
+  .nav-button:hover {
+    background-color: #6c63ff;
+    color: #fff;
+  }
+  
+  .navbar-right {
+    position: relative;
+  
+    .profile {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+  
+      .profile-text {
+        margin-right: 0.3rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      .caret-icon {
+        font-size: 0.8rem;
+      }
+    }
+  
+    .dropdown-menu {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background-color: #fff;
+      color: #333;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      padding: 0.5rem 0.75rem;
+      min-width: 120px;
+      z-index: 999;
+  
+      a {
+        padding: 0.4rem 0;
+        text-decoration: none;
+        color: #333;
+        cursor: pointer;
+        font-size: 0.95rem;
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+  

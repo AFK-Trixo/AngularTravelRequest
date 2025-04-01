@@ -1,0 +1,36 @@
+<nav class="navbar">
+    <!-- Left: Welcome Text -->
+    <div class="navbar-left">
+        <span class="welcome-text">Welcome, {{ userName }}</span>
+    </div>
+  
+    <!-- Center: Conditional buttons -->
+    <div class="navbar-center">
+      <ng-container *ngIf="navbarMode === 'admin'; else defaultCenter">
+        <button class="nav-button" (click)="onNavigate('employees')">
+          Employees
+        </button>
+        <button class="nav-button" (click)="onNavigate('managers')">
+          Managers
+        </button>
+      </ng-container>
+      <ng-template #defaultCenter>
+        <button class="create-request-btn" *ngIf="showCreateRequest" (click)="onCreateNewRequest()">
+          Create New Request
+        </button>
+      </ng-template>
+    </div>
+  
+    <!-- Right: Profile & Dropdown -->
+    <div class="navbar-right">
+      <div class="profile" (click)="toggleDropdown()">
+        <span class="profile-text">Profile</span>
+        <i class="fa fa-caret-down caret-icon"></i>
+      </div>
+      <div class="dropdown-menu" *ngIf="dropdownOpen">
+        <a (click)="onSettings()">Settings</a>
+        <a (click)="onLogout()">Log Out</a>
+      </div>
+    </div>
+  </nav>
+  

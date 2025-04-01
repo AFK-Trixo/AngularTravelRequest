@@ -1,0 +1,166 @@
+<app-navbar [showCreateRequest]="false" [navbarMode]="'admin'"></app-navbar>
+
+<div class="employees-list-container">
+  <h2>Employees</h2>
+
+  <!-- Filter Card -->
+  <div class="filter-card">
+    <h3>Filter Employees</h3>
+    <div class="filter-row">
+      <div class="filter-item">
+        <label>Search</label>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="ID, Name, Department, Email..."
+        />
+      </div>
+      <div class="filter-item">
+        <label>Sort By</label>
+        <select [(ngModel)]="sortBy">
+          <option value="">None</option>
+          <option value="id">ID</option>
+          <option value="name">Name</option>
+        </select>
+      </div>
+
+      <!-- +New button on the right side -->
+      <div class="filter-item new-button-container">
+        <button class="btn-new" (click)="onCreateNew()">+ New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Department</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of filteredEmployees">
+          <td>{{ emp.id }}</td>
+          <td>{{ emp.first_name }}</td>
+          <td>{{ emp.last_name }}</td>
+          <td>{{ emp.department || 'N/A' }}</td>
+          <td>{{ emp.email }}</td>
+          <td>{{ emp.status }}</td>
+          <td>
+            <button class="btn-view" (click)="onView(emp)">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- "View/Edit" Modal -->
+<div class="modal-overlay" *ngIf="isViewing && selectedEmployee">
+  <div class="modal-content bigger-modal">
+    <h3>View / Edit Employee</h3>
+    <p>Here you can view or edit the employee details:</p>
+
+    <div class="edit-form">
+      <div class="form-row">
+        <label>ID</label>
+        <input type="text" [(ngModel)]="selectedEmployee.id" readonly />
+      </div>
+      <div class="form-row">
+        <label>First Name</label>
+        <input type="text" [(ngModel)]="selectedEmployee.first_name" />
+      </div>
+      <div class="form-row">
+        <label>Last Name</label>
+        <input type="text" [(ngModel)]="selectedEmployee.last_name" />
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="selectedEmployee.email" />
+      </div>
+      <div class="form-row">
+        <label>Password</label>
+        <input type="text" [(ngModel)]="selectedEmployee.password" />
+      </div>
+      <div class="form-row">
+        <label>Department</label>
+        <input type="text" [(ngModel)]="selectedEmployee.department" />
+      </div>
+      <div class="form-row">
+        <label>Manager</label>
+        <input type="text" [(ngModel)]="selectedEmployee.manager" />
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select [(ngModel)]="selectedEmployee.status">
+          <option value="active">active</option>
+          <option value="inactive">inactive</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Created At</label>
+        <input type="text" [(ngModel)]="selectedEmployee.created_at" readonly />
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-save" (click)="saveEmployee()">Save</button>
+      <button class="btn-close-modal" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- "Create New" Modal -->
+<div class="modal-overlay" *ngIf="isCreating">
+  <div class="modal-content bigger-modal">
+    <h3>Create New Employee</h3>
+    <p>Fill out the details below to add a new employee:</p>
+
+    <div class="edit-form">
+      <div class="form-row">
+        <label>First Name</label>
+        <input type="text" [(ngModel)]="newEmployee.first_name" />
+      </div>
+      <div class="form-row">
+        <label>Last Name</label>
+        <input type="text" [(ngModel)]="newEmployee.last_name" />
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="newEmployee.email" />
+      </div>
+      <div class="form-row">
+        <label>Password</label>
+        <input type="text" [(ngModel)]="newEmployee.password" />
+      </div>
+      <div class="form-row">
+        <label>Department</label>
+        <input type="text" [(ngModel)]="newEmployee.department" />
+      </div>
+      <div class="form-row">
+        <label>Manager</label>
+        <input type="text" [(ngModel)]="newEmployee.manager" />
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select [(ngModel)]="newEmployee.status">
+          <option value="active">active</option>
+          <option value="inactive">inactive</option>
+        </select>
+      </div>
+      <!-- created_at is auto; we set it upon submit -->
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-save" (click)="submitNewEmployee()">Create</button>
+      <button class="btn-close-modal" (click)="closeCreateModal()">Cancel</button>
+    </div>
+  </div>
+</div>

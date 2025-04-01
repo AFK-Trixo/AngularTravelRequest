@@ -1,0 +1,147 @@
+<!-- admin-dashboard.component.html -->
+<app-navbar [showCreateRequest]="false" [navbarMode]="'admin'"></app-navbar>
+
+<div class="admin-dashboard-container">
+  <h2>Admin Dashboard</h2>
+
+  <!-- Filter Card -->
+  <div class="filter-card">
+    <h3>Filter Requests</h3>
+    <div class="filter-row">
+      <div class="filter-item">
+        <label>Search</label>
+        <input type="text" [(ngModel)]="searchTerm" placeholder="ID, Name, or Location" />
+      </div>
+
+      <div class="filter-item">
+        <label>Start Date</label>
+        <input type="date" [(ngModel)]="startDate" />
+      </div>
+
+      <div class="filter-item">
+        <label>End Date</label>
+        <input type="date" [(ngModel)]="endDate" />
+      </div>
+
+      <div class="filter-item">
+        <label>Status</label>
+        <select [(ngModel)]="selectedStatus">
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+          <option value="closed">Closed</option>
+          <option value="FI_required">More Info Required</option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label>Sort By</label>
+        <select [(ngModel)]="sortBy">
+          <option value="">None</option>
+          <option value="id">ID</option>
+          <option value="name">Name</option>
+          <option value="startDate">Start Date</option>
+          <option value="endDate">End Date</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table of Requests -->
+  <div class="requests-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Emp ID</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Destination</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let req of filteredRequests">
+          <td>{{ req.employee.id }}</td>
+          <td>{{ req.employee.first_name }} {{ req.employee.last_name }}</td>
+          <td>{{ req.location }}</td>
+          <td>{{ req.destination }}</td>
+          <td>{{ req.from_date }}</td>
+          <td>{{ req.to_date }}</td>
+          <td><span class="status-badge" [ngClass]="req.status">{{ req.status }}</span></td>
+          <td>
+            <button class="btn-view" (click)="onView(req)">View</button>
+            <button class="btn-approve" *ngIf="req.status === 'pending'" (click)="onApproveClick(req)">Approve</button>
+            <button class="btn-reject" *ngIf="req.status === 'pending'" (click)="onRejectClick(req)">Reject</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Reuse manager modals -->
+<ng-container *ngIf="selectedRequest">
+  <div class="modal-overlay" *ngIf="isViewing">
+    <div class="modal-content bigger-modal">
+      <h3>Request Details</h3>
+      <div class="detail-grid">
+        <div class="detail-item"><strong>Emp ID:</strong> {{ selectedRequest.employee.id }}</div>
+        <div class="detail-item"><strong>Name:</strong> {{ selectedRequest.employee.first_name }} {{ selectedRequest.employee.last_name }}</div>
+        <div class="detail-item"><strong>Location:</strong> {{ selectedRequest.location }}</div>
+        <div class="detail-item"><strong>Destination:</strong> {{ selectedRequest.destination }}</div>
+        <div class="detail-item"><strong>Start Date:</strong> {{ selectedRequest.from_date }}</div>
+        <div class="detail-item"><strong>End Date:</strong> {{ selectedRequest.to_date }}</div>
+        <div class="detail-item"><strong>Status:</strong> {{ selectedRequest.status }}</div>
+        <div class="detail-item"><strong>Purpose of Travel:</strong> {{ selectedRequest.purpose_of_travel }}</div>
+        <div class="detail-item"><strong>Manager Note:</strong> {{ selectedRequest.manager_note || 'No manager note' }}</div>
+        <div class="detail-item"><strong>Admin Note:</strong> {{ selectedRequest.admin_note || 'No admin note' }}</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-info" *ngIf="selectedRequest.status === 'pending'" (click)="onRequestInfo(selectedRequest)">Request Info</button>
+        <button class="btn-approve" *ngIf="selectedRequest.status === 'pending'" (click)="onApproveClick(selectedRequest)">Approve</button>
+        <button class="btn-reject" *ngIf="selectedRequest.status === 'pending'" (click)="onRejectClick(selectedRequest)">Reject</button>
+        <button class="btn-close-modal" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request Info Modal -->
+  <div class="modal-overlay" *ngIf="requestingInfo">
+    <div class="modal-content info-modal">
+      <h3>Request More Info</h3>
+      <textarea [(ngModel)]="infoMessage" placeholder="Enter your message"></textarea>
+      <div class="modal-actions">
+        <button class="btn-submit" (click)="submitInfoRequest()">Submit</button>
+        <button class="btn-close-modal" (click)="closeInfoModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approve Modal -->
+  <div class="modal-overlay" *ngIf="approvingRequest">
+    <div class="modal-content info-modal">
+      <h3>Approval Note</h3>
+      <textarea [(ngModel)]="approveMessage" placeholder="Enter approval note"></textarea>
+      <div class="modal-actions">
+        <button class="btn-submit" (click)="submitApproveRequest()">Approve</button>
+        <button class="btn-close-modal" (click)="closeApproveModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Modal -->
+  <div class="modal-overlay" *ngIf="rejectingRequest">
+    <div class="modal-content info-modal">
+      <h3>Reject Travel Request</h3>
+      <textarea [(ngModel)]="rejectMessage" placeholder="Enter rejection note"></textarea>
+      <div class="modal-actions">
+        <button class="btn-reject" (click)="submitRejectRequest()">Reject</button>
+        <button class="btn-close-modal" (click)="closeRejectModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

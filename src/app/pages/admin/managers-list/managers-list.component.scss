@@ -1,0 +1,206 @@
+.managers-list-container {
+    min-height: 100vh;
+    padding: 2rem;
+    background: radial-gradient(
+      circle at center,
+      #f4a9f5 0%,
+      #dca2f9 25%,
+      #b8a8ff 50%,
+      #a2a3fc 75%,
+      #9ea7fc 100%
+    );
+    color: #fff;
+  
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+  
+    .filter-card {
+      background: #2e2e3a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  
+      h3 {
+        margin: 0 0 0.5rem;
+      }
+  
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: flex-end;
+  
+        .filter-item {
+          display: flex;
+          flex-direction: column;
+  
+          label {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #ddd;
+          }
+  
+          input,
+          select {
+            background: #3e3e4a;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.5rem;
+          }
+  
+          &.new-button-container {
+            margin-left: auto; /* Push to far right */
+            display: flex;
+            align-items: flex-end;
+          }
+        }
+      }
+    }
+  
+    .table-card {
+      background: #2e2e3a;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #fff;
+  
+        thead {
+          background: #3e3e4a;
+        }
+  
+        th,
+        td {
+          padding: 0.75rem;
+          text-align: left;
+          border-bottom: 1px solid #444;
+        }
+  
+        tr:hover {
+          background: #3e3e4a;
+        }
+  
+        .btn-view {
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          padding: 0.4rem 0.75rem;
+          font-weight: 600;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+    }
+  }
+  
+  /* New Button Styling */
+  .btn-new {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #218838;
+    }
+  }
+  
+  /* Modal Styling */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .modal-content {
+    background: #2e2e3a;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 90%;
+    color: #fff;
+    width: 700px; /* bigger-modal style */
+  
+    h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  
+    .edit-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+  
+      .form-row {
+        display: flex;
+        flex-direction: column;
+  
+        label {
+          margin-bottom: 0.3rem;
+          font-weight: 600;
+        }
+  
+        input,
+        select {
+          background: #3e3e4a;
+          color: #fff;
+          border: 1px solid #555;
+          border-radius: 4px;
+          padding: 0.5rem;
+        }
+      }
+    }
+  
+    .modal-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+  
+      button {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+  
+      .btn-save {
+        background-color: #28a745;
+        color: #fff;
+        &:hover {
+          background-color: #218838;
+        }
+      }
+  
+      .btn-close-modal {
+        background-color: #6c757d;
+        color: #fff;
+        &:hover {
+          background-color: #5a6268;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,114 @@
+<app-navbar [navbarMode]="'employee'" [showCreateRequest]="true"></app-navbar>
+
+<div class="dashboard-container">
+  <h2>My Travel Requests</h2>
+
+  <div class="filter-container">
+    <select [(ngModel)]="filterStatus">
+      <option value="">All</option>
+      <option value="Approved">Approved</option>
+      <option value="More Info Required">More Info Required</option>
+      <option value="Pending">Pending</option>
+      <option value="Rejected">Rejected</option>
+      <option value="Closed">Closed</option>
+    </select>
+  </div>
+
+  <div class="requests-container">
+    <div *ngFor="let req of filteredRequests()" class="request-card">
+      <div class="card-header">
+        <span class="travel-route"><strong>{{ req.location }} → {{ req.destination }}</strong></span>
+        <span class="status" [ngClass]="statusClass(req.status)">{{ req.status }}</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Request ID:</strong> {{ req.id }}</p>
+        <p><strong>Travel Mode:</strong> {{ req.travel_mode }}</p>
+        <p><strong>Start Date:</strong> {{ req.from_date }}</p>
+        <p><strong>End Date:</strong> {{ req.to_date }}</p>
+      </div>
+      <div class="card-footer">
+        <ng-container *ngIf="req.status === 'More Info Required'; else normalView">
+          <button class="btn-resubmit" (click)="resubmitRequest(req)">Resubmit</button>
+        </ng-container>
+        <ng-template #normalView>
+          <button class="btn-view" (click)="viewRequest(req)">View</button>
+        </ng-template>
+
+        <button
+          *ngIf="req.status === 'Pending' || req.status === 'Rejected'"
+          class="btn-close"
+          (click)="deleteRequest(req)">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="selectedRequest">
+  <div class="modal-content">
+    <h3 *ngIf="!isResubmit">Request Details</h3>
+    <h3 *ngIf="isResubmit">Resubmit Request</h3>
+
+    <div class="request-details" *ngIf="!isResubmit">
+      <div class="detail-grid">
+        <div class="detail-item"><strong>Location:</strong> {{ selectedRequest.location }}</div>
+        <div class="detail-item"><strong>Destination:</strong> {{ selectedRequest.destination }}</div>
+        <div class="detail-item"><strong>From:</strong> {{ selectedRequest.from }}</div>
+        <div class="detail-item"><strong>Start Date:</strong> {{ selectedRequest.from_date }}</div>
+        <div class="detail-item"><strong>End Date:</strong> {{ selectedRequest.to_date }}</div>
+        <div class="detail-item"><strong>Travel Mode:</strong> {{ selectedRequest.travel_mode }}</div>
+        <div class="detail-item"><strong>Lodging Required:</strong> {{ selectedRequest.lodging_required }}</div>
+        <div class="detail-item"><strong>Purpose of Travel:</strong> {{ selectedRequest.purpose_of_travel }}</div>
+        <div class="detail-item"><strong>Manager's Note:</strong> {{ selectedRequest.manager_note }}</div>
+        <div class="detail-item"><strong>Admin's Note:</strong> {{ selectedRequest.admin_note }}</div>
+      </div>
+    </div>
+
+    <div class="request-details" *ngIf="isResubmit">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Location:</label>
+          <input [(ngModel)]="selectedRequest.location" />
+        </div>
+        <div class="detail-item">
+          <label>Destination:</label>
+          <input [(ngModel)]="selectedRequest.destination" />
+        </div>
+        <div class="detail-item">
+          <label>From:</label>
+          <input [(ngModel)]="selectedRequest.from" />
+        </div>
+        <div class="detail-item">
+          <label>Start Date:</label>
+          <input [(ngModel)]="selectedRequest.from_date" />
+        </div>
+        <div class="detail-item">
+          <label>End Date:</label>
+          <input [(ngModel)]="selectedRequest.to_date" />
+        </div>
+        <div class="detail-item">
+          <label>Travel Mode:</label>
+          <input [(ngModel)]="selectedRequest.travel_mode" />
+        </div>
+        <div class="detail-item">
+          <label>Purpose of Travel:</label>
+          <input [(ngModel)]="selectedRequest.purpose_of_travel" />
+        </div>
+        <div class="detail-item">
+          <label>Manager's Note:</label>
+          <textarea [(ngModel)]="selectedRequest.manager_note"></textarea>
+        </div>
+        <div class="detail-item">
+          <label>Admin's Note:</label>
+          <textarea [(ngModel)]="selectedRequest.admin_note"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="btn-close-modal" (click)="closeModal()">Cancel</button>
+      <button *ngIf="isResubmit" class="btn-confirm-resubmit" (click)="confirmResubmit()">Resubmit</button>
+    </div>
+  </div>
+</div>

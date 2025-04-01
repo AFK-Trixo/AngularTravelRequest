@@ -1,0 +1,153 @@
+<app-navbar [showCreateRequest]="false" [navbarMode]="'admin'"></app-navbar>
+
+<div class="managers-list-container">
+  <h2>Managers</h2>
+
+  <!-- Filter Card -->
+  <div class="filter-card">
+    <h3>Filter Managers</h3>
+    <div class="filter-row">
+      <div class="filter-item">
+        <label>Search</label>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="ID, Name, Department, Email..."
+        />
+      </div>
+      <div class="filter-item">
+        <label>Sort By</label>
+        <select [(ngModel)]="sortBy">
+          <option value="">None</option>
+          <option value="id">ID</option>
+          <option value="name">Name</option>
+        </select>
+      </div>
+      <!-- +New button placed on the far right -->
+      <div class="filter-item new-button-container">
+        <button class="btn-new" (click)="onCreateNew()">+ New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Department</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mgr of filteredManagers">
+          <td>{{ mgr.id }}</td>
+          <td>{{ mgr.first_name }}</td>
+          <td>{{ mgr.last_name }}</td>
+          <td>{{ mgr.department || 'N/A' }}</td>
+          <td>{{ mgr.email }}</td>
+          <td>{{ mgr.status }}</td>
+          <td>
+            <button class="btn-view" (click)="onView(mgr)">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- "View/Edit" Modal -->
+<div class="modal-overlay" *ngIf="isViewing && selectedManager">
+  <div class="modal-content bigger-modal">
+    <h3>View / Edit Manager</h3>
+    <p>Here you can view or edit the manager details:</p>
+    <div class="edit-form">
+      <div class="form-row">
+        <label>ID</label>
+        <input type="text" [(ngModel)]="selectedManager.id" readonly />
+      </div>
+      <div class="form-row">
+        <label>First Name</label>
+        <input type="text" [(ngModel)]="selectedManager.first_name" />
+      </div>
+      <div class="form-row">
+        <label>Last Name</label>
+        <input type="text" [(ngModel)]="selectedManager.last_name" />
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="selectedManager.email" />
+      </div>
+      <div class="form-row">
+        <label>Password</label>
+        <input type="text" [(ngModel)]="selectedManager.password" />
+      </div>
+      <div class="form-row">
+        <label>Department</label>
+        <input type="text" [(ngModel)]="selectedManager.department" />
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select [(ngModel)]="selectedManager.status">
+          <option value="active">active</option>
+          <option value="inactive">inactive</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Created At</label>
+        <input type="text" [(ngModel)]="selectedManager.created_at" readonly />
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" (click)="saveManager()">Save</button>
+      <button class="btn-close-modal" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- "Create New" Modal -->
+<div class="modal-overlay" *ngIf="isCreating">
+  <div class="modal-content bigger-modal">
+    <h3>Create New Manager</h3>
+    <p>Fill out the details below to add a new manager:</p>
+    <div class="edit-form">
+      <div class="form-row">
+        <label>First Name</label>
+        <input type="text" [(ngModel)]="newManager.first_name" />
+      </div>
+      <div class="form-row">
+        <label>Last Name</label>
+        <input type="text" [(ngModel)]="newManager.last_name" />
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="newManager.email" />
+      </div>
+      <div class="form-row">
+        <label>Password</label>
+        <input type="text" [(ngModel)]="newManager.password" />
+      </div>
+      <div class="form-row">
+        <label>Department</label>
+        <input type="text" [(ngModel)]="newManager.department" />
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select [(ngModel)]="newManager.status">
+          <option value="active">active</option>
+          <option value="inactive">inactive</option>
+        </select>
+      </div>
+      <!-- created_at will be set on submission -->
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" (click)="submitNewManager()">Create</button>
+      <button class="btn-close-modal" (click)="closeCreateModal()">Cancel</button>
+    </div>
+  </div>
+</div>

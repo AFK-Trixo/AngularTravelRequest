@@ -1,0 +1,31 @@
+/* src/styles.scss */
+
+/* Dark Theme Variables */
+:root {
+  --primary-bg: #1A2138;      /* main background */
+  --secondary-bg: #2B2D3C;    /* sidebar/card background */
+  --accent-color: #5DC7FA;    /* highlight color */
+  --text-color: #FFFFFF;      /* main text */
+  --text-muted: #A0A0A0;      /* muted text */
+  --navbar-bg: #1E273B;       /* top navbar background */
+  --sidebar-bg: #273142;      /* sidebar background */
+  --card-bg: #2A2F3B;         /* card background */
+  --hover-color: #333B50;     /* hover for menu items */
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
